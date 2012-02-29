@@ -1,6 +1,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <value_ifc.h>
+#include <value_ifc_builder.h>
 #include <string>
 #include <sstream>
 
