@@ -1,0 +1,15 @@
+lex.yy.*
+jeason.tab.*
+.*.d
+*~
+\#*\#
+*.tar.gz
+*.dsc
+*.deb
+*.exe
+*.[aos]
+*.py[co]
+*.o
+*.lib
+.svn/
+main
