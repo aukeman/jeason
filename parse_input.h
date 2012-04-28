@@ -13,7 +13,7 @@ bool parse_input( const std::string& in, U& )
   return false;
 }
 
-template <>
+template <> inline
 bool parse_input( const std::string& in, bool& out )
 {
   if ( in == "true" )
@@ -33,7 +33,7 @@ bool parse_input( const std::string& in, bool& out )
   }
 }
 
-template <>
+template <> inline
 bool parse_input( const std::string& in, int& out )
 {
   out = atoi(in.c_str());
@@ -41,7 +41,7 @@ bool parse_input( const std::string& in, int& out )
   return true;
 }
 
-template <>
+template <> inline
 bool parse_input( const std::string& in, float& out )
 {
   out = (float)atof(in.c_str());
@@ -49,7 +49,7 @@ bool parse_input( const std::string& in, float& out )
   return true;
 }
 
-template <>
+template <> inline
 bool parse_input( const std::string& in, double& out )
 {
   out = atof(in.c_str());
@@ -57,7 +57,7 @@ bool parse_input( const std::string& in, double& out )
   return true;
 }
 
-template <>
+template <> inline
 bool parse_input( const std::string& in, std::string& out )
 {
   out = in;

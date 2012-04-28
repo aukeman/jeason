@@ -7,31 +7,31 @@ U create_default_value()
   return U();
 }
 
-template <>
+template <> inline
 int create_default_value()
 {
   return 0;
 }
 
-template <>
+template <> inline
 float create_default_value()
 {
   return 0.0f;
 }
 
-template <>
+template <> inline
 double create_default_value()
 {
   return 0.0;
 }
 
-template<>
+template<> inline
 bool create_default_value()
 {
   return false;
 }
 
-template<>
+template<> inline
 std::string create_default_value()
 {
   return std::string("");

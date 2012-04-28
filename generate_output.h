@@ -16,7 +16,7 @@ bool generate_output( const U& in, std::ostream& out )
   return true;
 }
 
-template <>
+template <> inline
 bool generate_output( const bool& in, std::ostream& out )
 {
   static const std::string TRUE_STRING("true");
@@ -27,7 +27,7 @@ bool generate_output( const bool& in, std::ostream& out )
   return true;
 }
 
-template <>
+template <> inline
 bool generate_output( const double& in, std::ostream& out )
 {
   std::streamsize old_precision = 
@@ -40,7 +40,7 @@ bool generate_output( const double& in, std::ostream& out )
   return true;
 }
 
-template <>
+template <> inline
 bool generate_output( const float& in, std::ostream& out )
 {
   std::streamsize old_precision = 
@@ -53,7 +53,7 @@ bool generate_output( const float& in, std::ostream& out )
   return true;
 }
 
-template <>
+template <> inline
 bool generate_output( const std::string& in, std::ostream& out )
 {
   out << "\"";
