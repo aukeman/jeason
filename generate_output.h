@@ -76,7 +76,31 @@ bool generate_output( const std::string& in, std::ostream& out )
       out << '\\';
     }
 
-    out << c;
+    switch ( c )
+    {
+    case '\b':
+      out << 'b';
+      break;
+
+    case '\f':
+      out << 'f';
+      break;
+
+    case '\n':
+      out << 'n';
+      break;
+
+    case '\r':
+      out << 'r';
+      break;
+      
+    case '\t':
+      out << 't';
+      break;
+
+    default:
+      out << c;
+    }
 
     c = stream.get();
   }

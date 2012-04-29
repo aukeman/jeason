@@ -8,17 +8,17 @@
 
 #define TEST_NAME array_tests
 
-const char* empty_collection_strings[] = { "[]", 
-					   " []", 
-					   "[] ", 
-					   " [ ]", 
-					   "[ ] ", 
-					   " [ ] ", 
-					   " [    ] ",
-					   "     [          ]      ",
-					   "[\n]",
-					   "\n[\n]\n",
-					   NULL };
+static const char* empty_collection_strings[] = { "[]", 
+						  " []", 
+						  "[] ", 
+						  " [ ]", 
+						  "[ ] ", 
+						  " [ ] ", 
+						  " [    ] ",
+						  "     [          ]      ",
+						  "[\n]",
+						  "\n[\n]\n",
+						  NULL };
 
 
 class TEST_NAME : public CppUnit::TestFixture
@@ -339,7 +339,7 @@ class TEST_NAME : public CppUnit::TestFixture
     std::vector<std::string> v;
 
     std::stringstream buffer;
-    buffer << "[ \"a\", \"\", \" \", \"hello world\", \"hello\nworld\" ]";
+    buffer << "[ \"a\", \"\", \" \", \"hello world\", \"hello world\" ]";
 
     j->deserialize( v, buffer );
 
@@ -349,7 +349,7 @@ class TEST_NAME : public CppUnit::TestFixture
     CPPUNIT_ASSERT_EQUAL( std::string(""), v.at(1) );
     CPPUNIT_ASSERT_EQUAL( std::string(" "), v.at(2) );
     CPPUNIT_ASSERT_EQUAL( std::string("hello world"), v.at(3) );
-    CPPUNIT_ASSERT_EQUAL( std::string("hello\nworld"), v.at(4) );
+    CPPUNIT_ASSERT_EQUAL( std::string("hello world"), v.at(4) );
 
     delete j;
   }
@@ -370,13 +370,13 @@ class TEST_NAME : public CppUnit::TestFixture
     v.push_back("");
     v.push_back(" ");
     v.push_back("hello world");
-    v.push_back("hello\nworld");
+    v.push_back("hello world");
 
     buffer.str("");
 
     j->serialize( v, buffer );
 
-    CPPUNIT_ASSERT_EQUAL( std::string("[\"x\", \"\", \" \", \"hello world\", \"hello\nworld\"]"), buffer.str() );
+    CPPUNIT_ASSERT_EQUAL( std::string("[\"x\", \"\", \" \", \"hello world\", \"hello world\"]"), buffer.str() );
 
     delete j;
   }
