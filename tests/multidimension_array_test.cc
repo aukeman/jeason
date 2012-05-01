@@ -6,6 +6,8 @@
 
 #include <vector>
 
+#include <test_util.h>
+
 #define TEST_NAME multidimension_array_tests
 
 static const char* empty_collection_strings[] = { "[]", 
@@ -34,32 +36,51 @@ class TEST_NAME : public CppUnit::TestFixture
   CPPUNIT_TEST( empty_deque_deserialize );
   CPPUNIT_TEST( empty_deque_serialize );
 
-  // CPPUNIT_TEST( integer_vector_deserialize );
-  // CPPUNIT_TEST( integer_vector_serialize );
+  CPPUNIT_TEST( integer_vector_deserialize );
+  CPPUNIT_TEST( integer_vector_serialize );
 
-  // CPPUNIT_TEST( integer_list_deserialize );56
-  // CPPUNIT_TEST( integer_list_serialize );
+  CPPUNIT_TEST( integer_list_deserialize );
+  CPPUNIT_TEST( integer_list_serialize );
 
-  // CPPUNIT_TEST( integer_deque_deserialize );
-  // CPPUNIT_TEST( integer_deque_serialize );
+  CPPUNIT_TEST( integer_deque_deserialize );
+  CPPUNIT_TEST( integer_deque_serialize );
+
+  CPPUNIT_TEST( integer_vector_deserialize_3d );
+  CPPUNIT_TEST( integer_vector_serialize_3d );
+
+  CPPUNIT_TEST( integer_vector_deserialize_4d );
+  CPPUNIT_TEST( integer_vector_serialize_4d );
+
 
   CPPUNIT_TEST_SUITE_END();
 
-  typedef jeason<std::vector<std::vector<int> > > int_vector_vector_jeason;
-  typedef jeason<std::list<std::list<int> > >     int_list_list_jeason;
-  typedef jeason<std::deque<std::deque<int> > >   int_deque_deque_jeason;
+  typedef std::vector<std::vector<int> > int_vector_2d;
+  typedef jeason<int_vector_2d> int_vector_2d_jeason;
+
+  typedef std::list<std::list<int> > int_list_2d;
+  typedef jeason<int_list_2d >     int_list_2d_jeason;
+
+  typedef std::deque<std::deque<int> > int_deque_2d;
+  typedef jeason<int_deque_2d>   int_deque_2d_jeason;
+
+  typedef std::vector<std::vector<std::vector<int> > > int_vector_3d;
+  typedef jeason<int_vector_3d> int_vector_3d_jeason;
+
+  typedef std::vector<std::vector<std::vector<std::vector<int> > > > int_vector_4d;
+  typedef jeason<int_vector_4d> int_vector_4d_jeason;
+
 
   // EMPTY VECTOR ///////////////////////////////////////////////////
   
   void empty_vector_deserialize()
   {
-    int_vector_vector_jeason* j = int_vector_vector_jeason::build();
+    int_vector_2d_jeason* j = int_vector_2d_jeason::build();
 				  
     for ( const char** iter = empty_collection_strings;
 	  *iter != NULL;
 	  ++iter )
     {
-      std::vector<std::vector<int> > v;
+      int_vector_2d v;
       v.push_back(std::vector<int>());
       v.push_back(std::vector<int>());
 
@@ -76,9 +97,9 @@ class TEST_NAME : public CppUnit::TestFixture
 
   void empty_vector_serialize()
   {
-    int_vector_vector_jeason* j = int_vector_vector_jeason::build();
+    int_vector_2d_jeason* j = int_vector_2d_jeason::build();
 
-    std::vector<std::vector<int> > v;
+    int_vector_2d v;
     std::stringstream buffer("");
 
     j->serialize( v, buffer );
@@ -92,13 +113,13 @@ class TEST_NAME : public CppUnit::TestFixture
 
   void empty_list_deserialize()
   {
-    int_list_list_jeason* j = int_list_list_jeason::build();
+    int_list_2d_jeason* j = int_list_2d_jeason::build();
 
     for ( const char** iter = empty_collection_strings;
 	  *iter != NULL;
 	  ++iter )
     {
-      std::list<std::list<int> > l;
+      int_list_2d l;
       l.push_back(std::list<int>());
       l.push_back(std::list<int>());
 
@@ -115,9 +136,9 @@ class TEST_NAME : public CppUnit::TestFixture
 
   void empty_list_serialize()
   {
-    int_list_list_jeason* j = int_list_list_jeason::build();
+    int_list_2d_jeason* j = int_list_2d_jeason::build();
 
-    std::list<std::list<int> > l;
+    int_list_2d l;
     std::stringstream buffer("");
 
     j->serialize( l, buffer );
@@ -131,13 +152,13 @@ class TEST_NAME : public CppUnit::TestFixture
 
   void empty_deque_deserialize()
   {
-    int_deque_deque_jeason* j = int_deque_deque_jeason::build();
+    int_deque_2d_jeason* j = int_deque_2d_jeason::build();
 
     for ( const char** iter = empty_collection_strings;
 	  *iter != NULL;
 	  ++iter )
     {
-      std::deque<std::deque<int> > d;
+      int_deque_2d d;
       d.push_back(std::deque<int>());
       d.push_back(std::deque<int>());
 
@@ -154,9 +175,9 @@ class TEST_NAME : public CppUnit::TestFixture
 
   void empty_deque_serialize()
   {
-    int_deque_deque_jeason* j = int_deque_deque_jeason::build();
+    int_deque_2d_jeason* j = int_deque_2d_jeason::build();
 
-    std::deque<std::deque<int> > d;
+    int_deque_2d d;
     std::stringstream buffer("");
 
     j->serialize( d, buffer );
@@ -168,211 +189,434 @@ class TEST_NAME : public CppUnit::TestFixture
 
   // // INTEGER VECTOR ///////////////////////////////////////////////////
 
-  // void integer_vector_deserialize()
-  // {
-  //   int_vector_jeason* j = int_vector_jeason::build();
+  void integer_vector_deserialize()
+  {
+    int_vector_2d_jeason* j = int_vector_2d_jeason::build();
 
-  //   std::vector<int> v;
+    int_vector_2d v;
 
-  //   std::stringstream buffer;
-  //   buffer << "[ 1, 2, 3, 4, 5 ]";
+    std::stringstream buffer;
+    buffer << "[ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ]";
 
-  //   j->deserialize( v, buffer );
+    j->deserialize( v, buffer );
 
-  //   CPPUNIT_ASSERT_EQUAL( size_t(5), v.size()  );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.size()  );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(5), v.at(0).size() );
 
-  //   CPPUNIT_ASSERT_EQUAL( 1, v.at(0) );
-  //   CPPUNIT_ASSERT_EQUAL( 2, v.at(1) );
-  //   CPPUNIT_ASSERT_EQUAL( 3, v.at(2) );
-  //   CPPUNIT_ASSERT_EQUAL( 4, v.at(3) );
-  //   CPPUNIT_ASSERT_EQUAL( 5, v.at(4) );
+    CPPUNIT_ASSERT_EQUAL( 1, v.at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 2, v.at(0).at(1) );
+    CPPUNIT_ASSERT_EQUAL( 3, v.at(0).at(2) );
+    CPPUNIT_ASSERT_EQUAL( 4, v.at(0).at(3) );
+    CPPUNIT_ASSERT_EQUAL( 5, v.at(0).at(4) );
 
-  //   delete j;
-  // }
+    CPPUNIT_ASSERT_EQUAL( 6, v.at(1).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 7, v.at(1).at(1) );
+    CPPUNIT_ASSERT_EQUAL( 8, v.at(1).at(2) );
+    CPPUNIT_ASSERT_EQUAL( 9, v.at(1).at(3) );
+    CPPUNIT_ASSERT_EQUAL( 10, v.at(1).at(4) );
 
-  // void integer_vector_serialize()
-  // {
-  //   int_vector_jeason* j = int_vector_jeason::build();
+    delete j;
+  }
 
-  //   std::vector<int> v;
-  //   v.push_back(1);
+  void integer_vector_serialize()
+  {
+    int_vector_2d_jeason* j = int_vector_2d_jeason::build();
 
-  //   std::stringstream buffer;
+    std::vector<int> a;
+    a.push_back(1);
 
-  //   j->serialize( v, buffer );
+    int_vector_2d v;
+    v.push_back(a);
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[1]"), buffer.str() );
+    std::stringstream buffer;
 
-  //   v.push_back(2);
-  //   v.push_back(3);
-  //   v.push_back(4);
-  //   v.push_back(5);
+    j->serialize( v, buffer );
 
-  //   buffer.str("");
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1]]"), buffer.str() );
 
-  //   j->serialize( v, buffer );
+    std::vector<int> b;
+    b.push_back(6);
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[1, 2, 3, 4, 5]"), buffer.str() );
+    v.push_back(b);
 
-  //   delete j;
-  // }
+    buffer.str("");
+    j->serialize( v, buffer );
 
-  // // INTEGER LIST ///////////////////////////////
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1], [6]]"), buffer.str() );
 
-  // void integer_list_deserialize()
-  // {
-  //   int_list_jeason* j = int_list_jeason::build();
+    v.at(0).push_back(2);
+    v.at(0).push_back(3);
+    v.at(0).push_back(4);
+    v.at(0).push_back(5);
 
-  //   std::list<int> l;
+    v.at(1).push_back(7);
+    v.at(1).push_back(8);
+    v.at(1).push_back(9);
+    v.at(1).push_back(10);
 
-  //   std::stringstream buffer;
-  //   buffer << "[ 1, 2, 3, 4, 5 ]";
+    buffer.str("");
+    j->serialize( v, buffer );
 
-  //   j->deserialize( l, buffer );
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]"), buffer.str() );
 
-  //   CPPUNIT_ASSERT_EQUAL( size_t(5), l.size()  );
+    delete j;
+  }
 
-  //   int idx = 1;
-  //   for ( std::list<int>::iterator iter = l.begin();
-  // 	  iter != l.end();
-  // 	  ++iter, ++idx )
-  //   {
-  //     CPPUNIT_ASSERT_EQUAL( idx, *iter );
-  //   }
+  // // INTEGER LIST ///////////////////////////////////////////////////
 
-  //   delete j;
-  // }
+  void integer_list_deserialize()
+  {
+    using test_util::get_item;
 
-  // void integer_list_serialize()
-  // {
-  //   int_list_jeason* j = int_list_jeason::build();
+    int_list_2d_jeason* j = int_list_2d_jeason::build();
 
-  //   std::list<int> l;
-  //   l.push_back(1);
+    int_list_2d v;
 
-  //   std::stringstream buffer;
+    std::stringstream buffer;
+    buffer << "[ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ]";
 
-  //   j->serialize( l, buffer );
+    j->deserialize( v, buffer );
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[1]"), buffer.str() );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.size()  );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(5), get_item(v, 0).size() );
 
-  //   l.push_back(2);
-  //   l.push_back(3);
-  //   l.push_back(4);
-  //   l.push_back(5);
+    std::list<int>& first = get_item(v, 0);
+    std::list<int>& second = get_item(v, 1);
+    
 
-  //   buffer.str("");
+    CPPUNIT_ASSERT_EQUAL( 1, get_item(first, 0) );
+    CPPUNIT_ASSERT_EQUAL( 2, get_item(first, 1) );
+    CPPUNIT_ASSERT_EQUAL( 3, get_item(first, 2) );
+    CPPUNIT_ASSERT_EQUAL( 4, get_item(first, 3) );
+    CPPUNIT_ASSERT_EQUAL( 5, get_item(first, 4) );
 
-  //   j->serialize( l, buffer );
+    CPPUNIT_ASSERT_EQUAL( 6, get_item(second, 0) );
+    CPPUNIT_ASSERT_EQUAL( 7, get_item(second, 1) );
+    CPPUNIT_ASSERT_EQUAL( 8, get_item(second, 2) );
+    CPPUNIT_ASSERT_EQUAL( 9, get_item(second, 3) );
+    CPPUNIT_ASSERT_EQUAL( 10, get_item(second, 4) );
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[1, 2, 3, 4, 5]"), buffer.str() );
+    delete j;
+  }
 
-  //   delete j;
-  // }
+  void integer_list_serialize()
+  {
+    using test_util::get_item;
 
-  // // INTEGER DEQUE ///////////////////////////////
+    int_list_2d_jeason* j = int_list_2d_jeason::build();
 
-  // void integer_deque_deserialize()
-  // {
-  //   int_deque_jeason* j = int_deque_jeason::build();
+    std::list<int> a;
+    a.push_back(1);
 
-  //   std::deque<int> d;
+    int_list_2d v;
+    v.push_back(a);
 
-  //   std::stringstream buffer;
-  //   buffer << "[ 1, 2, 3, 4, 5 ]";
+    std::stringstream buffer;
 
-  //   j->deserialize( d, buffer );
+    j->serialize( v, buffer );
 
-  //   CPPUNIT_ASSERT_EQUAL( size_t(5), d.size()  );
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1]]"), buffer.str() );
 
-  //   int idx = 1;
-  //   for ( std::deque<int>::iterator iter = d.begin();
-  // 	  iter != d.end();
-  // 	  ++iter, ++idx )
-  //   {
-  //     CPPUNIT_ASSERT_EQUAL( idx, *iter );
-  //   }
+    std::list<int> b;
+    b.push_back(6);
 
-  //   delete j;
-  // }
+    v.push_back(b);
 
-  // void integer_deque_serialize()
-  // {
-  //   int_deque_jeason* j = int_deque_jeason::build();
+    buffer.str("");
+    j->serialize( v, buffer );
 
-  //   std::deque<int> d;
-  //   d.push_back(1);
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1], [6]]"), buffer.str() );
 
-  //   std::stringstream buffer;
+    get_item(v, 0).push_back(2);
+    get_item(v, 0).push_back(3);
+    get_item(v, 0).push_back(4);
+    get_item(v, 0).push_back(5);
 
-  //   j->serialize( d, buffer );
+    get_item(v, 1).push_back(7);
+    get_item(v, 1).push_back(8);
+    get_item(v, 1).push_back(9);
+    get_item(v, 1).push_back(10);
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[1]"), buffer.str() );
+    buffer.str("");
+    j->serialize( v, buffer );
 
-  //   d.push_back(2);
-  //   d.push_back(3);
-  //   d.push_back(4);
-  //   d.push_back(5);
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]"), buffer.str() );
 
-  //   buffer.str("");
+    delete j;
+  }
 
-  //   j->serialize( d, buffer );
+  // // INTEGER DEQUE ///////////////////////////////////////////////////
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[1, 2, 3, 4, 5]"), buffer.str() );
+  void integer_deque_deserialize()
+  {
+    using test_util::get_item;
 
-  //   delete j;
-  // }
+    int_deque_2d_jeason* j = int_deque_2d_jeason::build();
 
-  // // STRING VECTOR ///////////////////////////////////////////////////
+    int_deque_2d v;
 
-  // void string_vector_deserialize()
-  // {
-  //   string_vector_jeason* j = string_vector_jeason::build();
+    std::stringstream buffer;
+    buffer << "[ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ]";
 
-  //   std::vector<std::string> v;
+    j->deserialize( v, buffer );
 
-  //   std::stringstream buffer;
-  //   buffer << "[ \"a\", \"\", \" \", \"hello world\", \"hello world\" ]";
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.size()  );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(5), get_item(v, 0).size() );
 
-  //   j->deserialize( v, buffer );
+    std::deque<int>& first = get_item(v, 0);
+    std::deque<int>& second = get_item(v, 1);
+    
 
-  //   CPPUNIT_ASSERT_EQUAL( size_t(5), v.size()  );
+    CPPUNIT_ASSERT_EQUAL( 1, get_item(first, 0) );
+    CPPUNIT_ASSERT_EQUAL( 2, get_item(first, 1) );
+    CPPUNIT_ASSERT_EQUAL( 3, get_item(first, 2) );
+    CPPUNIT_ASSERT_EQUAL( 4, get_item(first, 3) );
+    CPPUNIT_ASSERT_EQUAL( 5, get_item(first, 4) );
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("a"), v.at(0) );
-  //   CPPUNIT_ASSERT_EQUAL( std::string(""), v.at(1) );
-  //   CPPUNIT_ASSERT_EQUAL( std::string(" "), v.at(2) );
-  //   CPPUNIT_ASSERT_EQUAL( std::string("hello world"), v.at(3) );
-  //   CPPUNIT_ASSERT_EQUAL( std::string("hello world"), v.at(4) );
+    CPPUNIT_ASSERT_EQUAL( 6, get_item(second, 0) );
+    CPPUNIT_ASSERT_EQUAL( 7, get_item(second, 1) );
+    CPPUNIT_ASSERT_EQUAL( 8, get_item(second, 2) );
+    CPPUNIT_ASSERT_EQUAL( 9, get_item(second, 3) );
+    CPPUNIT_ASSERT_EQUAL( 10, get_item(second, 4) );
 
-  //   delete j;
-  // }
+    delete j;
+  }
 
-  // void string_vector_serialize()
-  // {
-  //   string_vector_jeason* j = string_vector_jeason::build();
+  void integer_deque_serialize()
+  {
+    using test_util::get_item;
 
-  //   std::vector<std::string> v;
-  //   v.push_back("x");
+    int_deque_2d_jeason* j = int_deque_2d_jeason::build();
 
-  //   std::stringstream buffer;
+    std::deque<int> a;
+    a.push_back(1);
 
-  //   j->serialize( v, buffer );
+    int_deque_2d v;
+    v.push_back(a);
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[\"x\"]"), buffer.str() );
+    std::stringstream buffer;
 
-  //   v.push_back("");
-  //   v.push_back(" ");
-  //   v.push_back("hello world");
-  //   v.push_back("hello world");
+    j->serialize( v, buffer );
 
-  //   buffer.str("");
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1]]"), buffer.str() );
 
-  //   j->serialize( v, buffer );
+    std::deque<int> b;
+    b.push_back(6);
 
-  //   CPPUNIT_ASSERT_EQUAL( std::string("[\"x\", \"\", \" \", \"hello world\", \"hello world\"]"), buffer.str() );
+    v.push_back(b);
 
-  //   delete j;
-  // }
+    buffer.str("");
+    j->serialize( v, buffer );
+
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1], [6]]"), buffer.str() );
+
+    get_item(v, 0).push_back(2);
+    get_item(v, 0).push_back(3);
+    get_item(v, 0).push_back(4);
+    get_item(v, 0).push_back(5);
+
+    get_item(v, 1).push_back(7);
+    get_item(v, 1).push_back(8);
+    get_item(v, 1).push_back(9);
+    get_item(v, 1).push_back(10);
+
+    buffer.str("");
+    j->serialize( v, buffer );
+
+    CPPUNIT_ASSERT_EQUAL( std::string("[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]"), buffer.str() );
+
+    delete j;
+  }
+
+  // // INTEGER VECTOR 3D /////////////////////////////////////////////////
+
+  void integer_vector_deserialize_3d()
+  {
+    int_vector_3d_jeason* j = int_vector_3d_jeason::build();
+
+    int_vector_3d v;
+
+    std::stringstream buffer;
+    buffer << "[[[1, 2], [3, 4], [5]], [[6, 7, 8], [], [9, 10]]]";
+                
+    j->deserialize( v, buffer );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.size()  );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(3), v.at(0).size() );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).at(1).size() );
+    CPPUNIT_ASSERT_EQUAL( size_t(1), v.at(0).at(2).size() );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(3), v.at(1).size() );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(3), v.at(1).at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( size_t(0), v.at(1).at(1).size() );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(1).at(2).size() );
+    
+    CPPUNIT_ASSERT_EQUAL( 1, v.at(0).at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 2, v.at(0).at(0).at(1) );
+
+    CPPUNIT_ASSERT_EQUAL( 3, v.at(0).at(1).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 4, v.at(0).at(1).at(1) );
+
+    CPPUNIT_ASSERT_EQUAL( 5, v.at(0).at(2).at(0) );
+
+    CPPUNIT_ASSERT_EQUAL( 6, v.at(1).at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 7, v.at(1).at(0).at(1) );
+    CPPUNIT_ASSERT_EQUAL( 8, v.at(1).at(0).at(2) );
+
+    CPPUNIT_ASSERT_EQUAL( 9, v.at(1).at(2).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 10, v.at(1).at(2).at(1) );
+
+    delete j;
+  }
+
+  void integer_vector_serialize_3d()
+  {
+    int_vector_3d_jeason* j = int_vector_3d_jeason::build();
+
+    std::vector<int> a, b, c, d, e;
+    a.push_back(1);
+    a.push_back(2);
+
+    b.push_back(3);
+    b.push_back(4);
+
+    c.push_back(5);
+
+    d.push_back(6);
+    d.push_back(7);
+    d.push_back(8);
+    
+    e.push_back(9);
+    e.push_back(10);
+
+    int_vector_2d first, second;
+
+    first.push_back(a);
+    first.push_back(b);
+    first.push_back(c);
+
+    second.push_back(d);
+    second.push_back( std::vector<int>() );
+    second.push_back(e);
+
+    int_vector_3d v;
+
+    v.push_back(first);
+    v.push_back(second);
+
+    std::stringstream buffer;
+    j->serialize( v, buffer );
+
+    CPPUNIT_ASSERT_EQUAL( std::string("[[[1, 2], [3, 4], [5]], [[6, 7, 8], [], [9, 10]]]"), buffer.str() );
+
+    delete j;
+  }
+
+  // // INTEGER VECTOR 4D /////////////////////////////////////////////////
+
+  void integer_vector_deserialize_4d()
+  {
+    int_vector_4d_jeason* j = int_vector_4d_jeason::build();
+
+    int_vector_4d v;
+
+    std::stringstream buffer;
+    buffer << "[[[[1, 2], [3, 4]], [[5, 6]]], [[[7, 8]], [[9, 10]]]]";
+                
+    j->deserialize( v, buffer );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.size()  );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).at(0).size() );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).at(0).at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( 1, v.at(0).at(0).at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 2, v.at(0).at(0).at(0).at(1) );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).at(0).at(1).size() );
+    CPPUNIT_ASSERT_EQUAL( 3, v.at(0).at(0).at(1).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 4, v.at(0).at(0).at(1).at(1) );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(1), v.at(0).at(1).size() );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(0).at(1).at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( 5, v.at(0).at(1).at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 6, v.at(0).at(1).at(0).at(1) );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(1).size() );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(1), v.at(1).at(0).size() );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(1).at(0).at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( 7, v.at(1).at(0).at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 8, v.at(1).at(0).at(0).at(1) );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(1), v.at(1).at(1).size() );
+    
+    CPPUNIT_ASSERT_EQUAL( size_t(2), v.at(1).at(1).at(0).size() );
+    CPPUNIT_ASSERT_EQUAL( 9, v.at(1).at(1).at(0).at(0) );
+    CPPUNIT_ASSERT_EQUAL( 10, v.at(1).at(1).at(0).at(1) );
+
+    delete j;
+  }
+
+  void integer_vector_serialize_4d()
+  {
+    int_vector_4d_jeason* j = int_vector_4d_jeason::build();
+
+    std::vector<int> a, b, c, d, e;
+    a.push_back(1);
+    a.push_back(2);
+
+    b.push_back(3);
+    b.push_back(4);
+
+    c.push_back(5);
+    c.push_back(6);
+
+    d.push_back(7);
+    d.push_back(8);
+    
+    e.push_back(9);
+    e.push_back(10);
+
+    int_vector_2d a1, a2, b1, b2;
+    a1.push_back(a);
+    a1.push_back(b);
+
+    a2.push_back(c);
+
+    b1.push_back(d);
+    
+    b2.push_back(e);
+
+    int_vector_3d first, second;
+
+    first.push_back(a1);
+    first.push_back(a2);
+
+    second.push_back(b1);
+    second.push_back(b2);
+
+    int_vector_4d v;
+
+    v.push_back(first);
+    v.push_back(second);
+
+    std::stringstream buffer;
+    j->serialize( v, buffer );
+
+    CPPUNIT_ASSERT_EQUAL( std::string("[[[[1, 2], [3, 4]], [[5, 6]]], [[[7, 8]], [[9, 10]]]]"), buffer.str() );
+
+    delete j;
+  }
 
 
 };

@@ -49,6 +49,48 @@ class jeason_builder<std::vector<std::vector<U> > >
 //
 
 template <typename U>
+class jeason_builder<std::list<std::list<U> > >
+{
+ public:
+
+  static jeason<std::list<std::list<U> > >* build()
+  {
+    return new multidimension_collection_jeason<std::list<std::list<U> > >();
+  }
+
+  static jeason<std::list<std::list<U> > >* build( jeason<std::list<U> >* element_parser )
+  {
+    return new multidimension_collection_jeason<std::list<std::list<U> > >(element_parser);
+  }
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+
+template <typename U>
+class jeason_builder<std::deque<std::deque<U> > >
+{
+ public:
+
+  static jeason<std::deque<std::deque<U> > >* build()
+  {
+    return new multidimension_collection_jeason<std::deque<std::deque<U> > >();
+  }
+
+  static jeason<std::deque<std::deque<U> > >* build( jeason<std::deque<U> >* element_parser )
+  {
+    return new multidimension_collection_jeason<std::deque<std::deque<U> > >(element_parser);
+  }
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+
+template <typename U>
 class jeason_builder<std::vector<U> >
 {
  public:
