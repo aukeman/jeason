@@ -343,7 +343,10 @@ jeason_base* object_jeason<T>::begin_object( const std::string& name )
   {
     member->second->reset( *(this->get_subject()) );
     member->second->set_parser_subject( *(this->get_subject()) );
-    
+
+    // TODO: why does array member not have parent at this point?
+    // causing SEGFAULT in unit tests
+
     return member->second->get_parser();
   }
   else
