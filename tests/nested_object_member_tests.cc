@@ -68,7 +68,7 @@ class TEST_NAME : public CppUnit::TestFixture
     o.inner.a = "hello";
     o.inner.b = "world";
     
-    std::stringstream buffer("{ \"f\": 37.5, \"i\": 37, \"s\": \"37\", \"v\": [ 3, 7 ],  \"inner\": { \"a\": \"3\", \"b\": \"7\" } }");
+    std::stringstream buffer("{ \"i\": 37, \"s\": \"37\", \"v\": [ 3, 7 ],  \"inner\": { \"a\": \"3\", \"b\": \"7\" }, \"f\": 37.5 }");
 
     j->deserialize(o, buffer);
 

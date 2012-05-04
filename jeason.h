@@ -52,7 +52,7 @@ template <typename U>
 void jeason<T>::add_member( const std::string& name, 
 			    U T::*member_ptr )
 {
-  add_member( name, build_member_ifc(member_ptr) );
+  add_member( name, build_member_ifc(member_ptr, this) );
 }
 
 template <typename T>
@@ -62,7 +62,7 @@ void jeason<T>::add_member(const std::string& name,
 			   jeason<U>* parser)
 {
   parser->set_parent(this);
-  add_member( name, build_member_ifc(member_ptr, parser) );
+  add_member( name, build_member_ifc(member_ptr, parser, this) );
 }
 
 template <typename T>
@@ -343,9 +343,6 @@ jeason_base* object_jeason<T>::begin_object( const std::string& name )
   {
     member->second->reset( *(this->get_subject()) );
     member->second->set_parser_subject( *(this->get_subject()) );
-
-    // TODO: why does array member not have parent at this point?
-    // causing SEGFAULT in unit tests
 
     return member->second->get_parser();
   }
