@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+#include <jeason.h>
+
 #define TEST_NAME value_ifc_tests
 
 class TEST_NAME : public CppUnit::TestFixture

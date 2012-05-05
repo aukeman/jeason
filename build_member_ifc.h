@@ -1,7 +1,8 @@
 #ifndef BUILD_MEMBER_IFC_H
 #define BUILD_MEMBER_IFC_H
 
-#include <value_ifc_types.h>
+#include <value_ifc.h>
+#include <jeason.h>
 
 class jeason_base;
 

@@ -27,13 +27,16 @@ $(PROGRAM) : $(OBJ_FILES)
 	echo -n "$@ " > $@
 	g++ -MM -I. -I.. $< >> $@
 
+ifneq ($(MAKECMDGOALS),clean)
 -include $(DEP_FILES)
+endif
 
 $(GENERATED_SRC_FILES) $(GENERATED_HDR_FILES) : jeason.y jeason.l
 	bison -d jeason.y
 	flex jeason.l
 
 clean :
+	rm -f *~
 	rm -f $(GENERATED_SRC_FILES) $(GENERATED_HDR_FILES) $(DEP_FILES)
 	rm -f $(OBJ_FILES)
 	rm -f $(PROGRAM)

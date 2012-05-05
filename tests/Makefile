@@ -20,9 +20,12 @@ $(PROGRAM) : $(OBJ_FILES)
 	echo -n "$@ " > $@
 	g++ -MM -I. -I.. $< >> $@
 
+ifneq ($(MAKECMDGOALS),clean)
 -include $(DEP_FILES)
+endif
 
 clean :
+	rm -f *~
 	rm -f $(PROGRAM)
 	rm -f $(OBJ_FILES)
 	rm -f $(DEP_FILES)
