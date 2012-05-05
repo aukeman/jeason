@@ -17,7 +17,7 @@ DEP_FILES:=$(patsubst %.cc, .%.d, $(DEP_FILES))
 
 $(PROGRAM) : $(OBJ_FILES)
 
-$(OBJ_FILES) : $(HDR_FILES) $(SRC_FILES) $(GENERATED_SRC_FILES) $(DEP_FILES)
+#$(OBJ_FILES) : $(HDR_FILES) $(SRC_FILES) $(GENERATED_SRC_FILES) $(DEP_FILES)
 
 .%.d : %.cc
 	echo -n "$@ " > $@
