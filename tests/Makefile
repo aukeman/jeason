@@ -16,7 +16,7 @@ all : $(PROGRAM)
 
 $(PROGRAM) : $(OBJ_FILES) 
 
-$(OBJ_FILES) : $(SRC_FILES) $(DEP_FILES)
+# $(OBJ_FILES) : $(SRC_FILES) $(DEP_FILES)
 
 .%.d : %.cc
 	echo -n "$@ " > $@
