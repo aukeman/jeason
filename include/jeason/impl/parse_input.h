@@ -1,5 +1,5 @@
-#ifndef PARSE_INPUT_H
-#define PARSE_INPUT_H
+#ifndef JEASON_IMPL_PARSE_INPUT_H
+#define JEASON_IMPL_PARSE_INPUT_H
 
 #include <string>
 

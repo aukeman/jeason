@@ -1,5 +1,7 @@
-#ifndef CREATE_DEFAULT_VALUE_H
-#define CREATE_DEFAULT_VALUE_H
+#ifndef JEASON_IMPL_CREATE_DEFAULT_VALUE_H
+#define JEASON_IMPL_CREATE_DEFAULT_VALUE_H
+
+#include <string>
 
 template <typename U>
 U create_default_value()

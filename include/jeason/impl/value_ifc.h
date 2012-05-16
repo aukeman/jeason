@@ -1,7 +1,7 @@
-#ifndef VALUE_IFC_H
-#define VALUE_IFC_H
+#ifndef JEASON_IMPL_VALUE_IFC_H
+#define JEASON_IMPL_VALUE_IFC_H
 
-#include <jeason_base.h>
+#include <jeason/impl/jeason_base.h>
 
 #include <string>
 #include <iostream>

@@ -1,11 +1,11 @@
-#ifndef JEASON_BUILDER_H
-#define JEASON_BUILDER_H
+#ifndef JEASON_IMPL_JEASON_BUILDER_H
+#define JEASON_IMPL_JEASON_BUILDER_H
 
 #include <list>
 #include <vector>
 #include <deque>
 
-#include <jeason.h>
+#include <jeason/jeason.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 //

@@ -1,5 +1,5 @@
-#ifndef GENERATE_OUTPUT_H
-#define GENERATE_OUTPUT_H
+#ifndef JEASON_IMPL_GENERATE_OUTPUT_H
+#define JEASON_IMPL_GENERATE_OUTPUT_H
 
 #include <ostream>
 #include <string>

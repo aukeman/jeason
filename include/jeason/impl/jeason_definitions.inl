@@ -1,15 +1,14 @@
-#include <jeason_base.h>
-#include <value_ifc_builder.h>
+#include <jeason/impl/jeason_base.h>
+#include <jeason/impl/value_ifc_builder.h>
 
-#include <jeason.h>
+#include <jeason/jeason.h>
 
-#include <build_member_ifc.h>
-#include <jeason_builder.h>
+#include <jeason/impl/build_member_ifc.h>
+#include <jeason/impl/jeason_builder.h>
 
-#include <value_ifc.h>
+#include <jeason/impl/value_ifc.h>
 
 #include <iostream>
-
 #include <map>
 
 extern std::istream* jeason_input_stream_ptr;

@@ -1,5 +1,5 @@
-#ifndef VALUE_IFC_BUILDER_H
-#define VALUE_IFC_BUILDER_H
+#ifndef JEASON_IMPL_VALUE_IFC_BUILDER_H
+#define JEASON_IMPL_VALUE_IFC_BUILDER_H
 
 #include <list>
 #include <map>
@@ -7,7 +7,7 @@
 #include <set>
 #include <vector>
 
-#include <value_ifc.h>
+#include <jeason/impl/value_ifc.h>
 
 
 ///////////////////////////////////////////////////////////////////////////////

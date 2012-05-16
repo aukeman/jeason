@@ -1,5 +1,5 @@
-#ifndef JEASON_BASE_H
-#define JEASON_BASE_H
+#ifndef JEASON_IMPL_JEASON_BASE_H
+#define JEASON_IMPL_JEASON_BASE_H
 
 #include <string>
 #include <istream>

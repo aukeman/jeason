@@ -1,6 +1,6 @@
 %{
   #include <stdio.h>
-  #include <jeason_base.h>
+  #include <jeason/impl/jeason_base.h>
 
   extern int yylex();
 

@@ -1,9 +1,10 @@
-#ifndef JEASON_H
-#define JEASON_H
+#ifndef JEASON_JEASON_H
+#define JEASON_JEASON_H
 
-#include <jeason_base.h>
-#include <value_ifc.h>
 #include <iostream>
+
+#include <jeason/impl/jeason_base.h>
+#include <jeason/impl/value_ifc.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -59,8 +60,8 @@ protected:
 
 };
 
-#include <concrete_jeason_types.inl>
-#include <jeason_definitions.inl>
-#include <value_ifc_definitions.inl>
+#include <jeason/impl/concrete_jeason_types.inl>
+#include <jeason/impl/jeason_definitions.inl>
+#include <jeason/impl/value_ifc_definitions.inl>
 
 #endif
