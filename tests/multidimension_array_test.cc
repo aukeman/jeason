@@ -1,6 +1,6 @@
-#include <cppunit/extensions/HelperMacros.h>
-
 #include <jeason/jeason.h>
+
+#include <cppunit/extensions/HelperMacros.h>
 
 #include <string>
 #include <sstream>

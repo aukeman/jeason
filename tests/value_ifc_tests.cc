@@ -1,9 +1,9 @@
+#include <jeason/jeason.h>
+
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <string>
 #include <sstream>
-
-#include <jeason/jeason.h>
 
 #define TEST_NAME value_ifc_tests
 

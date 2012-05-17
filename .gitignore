@@ -12,4 +12,6 @@ jeason.tab.*
 *.o
 *.lib
 .svn/
+lib/
 main
+*.h.gch
