@@ -2,8 +2,8 @@
 #define JEASON_IMPL_PARSE_INPUT_H
 
 #include <string>
-
 #include <stdlib.h>
+#include <sstream>
 
 template <typename U>
 bool parse_input( const std::string& in, U& )
@@ -60,7 +60,40 @@ bool parse_input( const std::string& in, double& out )
 template <> inline
 bool parse_input( const std::string& in, std::string& out )
 {
-  out = in;
+  out = "";
+
+  std::stringstream in_stream(in);
+  std::stringstream out_stream("");
+
+  char c = in_stream.get();
+  while ( in_stream.good() )
+  {
+    if ( c == '\\' )
+    {
+      c = in_stream.get();
+      if ( in_stream.good() )
+      {
+	switch ( c )
+	{
+	case 'n':
+	  c = '\n';
+	  break;
+	  
+	case 't':
+	  c = '\t';
+	  break;
+	}
+      }
+    }
+
+    if ( in_stream.good() )
+    {
+      out_stream << c;
+      c = in_stream.get();
+    }
+  }
+
+  out = out_stream.str();
 
   return true;
 }
