@@ -4,8 +4,8 @@ CPPFLAGS=-Isrc -Iinclude -g -fpic
 LIB=lib/libjeason.a
 DSO=lib/libjeason.so
 
-PRECOMPILED_HEADER=include/jeason/jeason.h.gch
-PRECOMPILED_HEADER_DEP=include/jeason/.jeason.d
+#PRECOMPILED_HEADER=include/jeason/jeason.h.gch
+#PRECOMPILED_HEADER_DEP=include/jeason/.jeason.d
 
 GENERATED_SRC_FILES=src/jeason.tab.c src/lex.yy.c
 GENERATED_HDR_FILES=src/jeason.tab.h

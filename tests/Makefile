@@ -1,25 +1,28 @@
 CC=g++
 CPPFLAGS=-I. -I../include -g -fpic
 
-LDFLAGS=
+LDFLAGS=-L../lib -ljeason -Wl,-rpath="../lib"  -fpic
 
-#-L../lib -Wl,-static -ljeason  -fpic
+#-Wl,-static
 
 PROGRAM=main
 
 CC_FILES:=$(wildcard *.cc)
 OBJ_FILES:=$(patsubst %.cc, %.o, $(CC_FILES)) 
-DEP_FILES:=$(patsubst %.cc, .%.d, $(CC_FILES))
+DEP_FILES:=$(patsubst %.cc, .%.d, $(CC_FILES)) 
 
 LDLIBS=-lcppunit 
 
-all : $(PROGRAM)
+.PHONY: jeason
+
+all : jeason $(PROGRAM)
 	./$(PROGRAM)
 
-$(PROGRAM) : $(OBJ_FILES) ../lib/libjeason.a
-
-../lib/libjeason.so:
+jeason:
 	make -C ..
+
+$(PROGRAM) : $(OBJ_FILES)
+
 
 .%.d : %.cc
 	echo -n "$@ " > $@

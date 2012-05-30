@@ -82,6 +82,18 @@ bool parse_input( const std::string& in, std::string& out )
 	case 't':
 	  c = '\t';
 	  break;
+
+	case 'b':
+	  c = '\b';
+	  break;
+
+	case 'f':
+	  c = '\f';
+	  break;
+
+	case 'r':
+	  c = '\r';
+	  break;
 	}
       }
     }
