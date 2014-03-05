@@ -41,7 +41,7 @@ int yywrap() { return 1; }
 
 const char* strip_quotes( char* source )
 {
-  source[ strlen(source)-1 ] = NULL;
+  source[ strlen(source)-1 ] = '\0';
   return &source[1];
 }
 

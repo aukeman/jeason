@@ -1,8 +1,10 @@
 CC=g++
 CPPFLAGS=-Isrc -Iinclude -g -fpic
 
-LIB=lib/libjeason.a
-DSO=lib/libjeason.so
+LIBDIR=lib
+
+LIB=$(LIBDIR)/libjeason.a
+DSO=$(LIBDIR)/libjeason.so
 
 #PRECOMPILED_HEADER=include/jeason/jeason.h.gch
 #PRECOMPILED_HEADER_DEP=include/jeason/.jeason.d
@@ -15,10 +17,10 @@ DEP_FILES:=$(patsubst src/%.c, src/.%.d, $(GENERATED_SRC_FILES)) $(PRECOMPILED_H
 
 all: $(PRECOMPILED_HEADER) $(LIB) $(DSO)
 
-$(DSO): $(OBJ_FILES)
+$(DSO): $(LIBDIR) $(OBJ_FILES)
 	g++ -fpic -shared -o $@ $(OBJ_FILES)
 
-$(LIB): $(LIB)($(OBJ_FILES))
+$(LIB): $(LIBDIR) $(LIB)($(OBJ_FILES))
 
 .%.d : %.cc
 	echo -n "$@ " > $@
@@ -35,6 +37,9 @@ $(LIB): $(LIB)($(OBJ_FILES))
 
 $(PRECOMPILED_HEADER): $(patsubst %.gch, %, $(PRECOMPILED_HEADER))
 	$(CC) $(CPPFLAGS) -c -o $@ $<
+
+$(LIBDIR):
+	mkdir lib
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),clobber)
