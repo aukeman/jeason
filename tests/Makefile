@@ -1,9 +1,7 @@
 CC=g++
 CPPFLAGS=-I. -I../include -g -fpic
 
-LDFLAGS=-L../lib -ljeason -Wl,-rpath="../lib"  -fpic
-
-#-Wl,-static
+LDFLAGS=-L../lib -fpic -Wl,-rpath="../lib"
 
 PROGRAM=main
 
@@ -11,7 +9,7 @@ CC_FILES:=$(wildcard *.cc)
 OBJ_FILES:=$(patsubst %.cc, %.o, $(CC_FILES)) 
 DEP_FILES:=$(patsubst %.cc, .%.d, $(CC_FILES)) 
 
-LDLIBS=-lcppunit 
+LDLIBS=-lcppunit -ljeason
 
 .PHONY: jeason
 
@@ -26,7 +24,7 @@ $(PROGRAM) : $(OBJ_FILES)
 
 .%.d : %.cc
 	echo -n "$@ " > $@
-	g++ -MM -I. -I../include $< >> $@
+	g++ -fpic -MM -I. -I../include $< >> $@
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),clobber)
