@@ -15,104 +15,184 @@ class TEST_NAME : public CppUnit::TestFixture
 {
   CPPUNIT_TEST_SUITE( TEST_NAME );
 
-  CPPUNIT_TEST( object_deserialize );
-  CPPUNIT_TEST( object_serialize );
+  CPPUNIT_TEST( deserialize_empty );
+  CPPUNIT_TEST( deserialize_single );
+  CPPUNIT_TEST( deserialize_multiple );
+
+  CPPUNIT_TEST( serialize_empty );
+  CPPUNIT_TEST( serialize_single );
+  CPPUNIT_TEST( serialize_multiple );
+
 
   CPPUNIT_TEST_SUITE_END();
   
-  struct object
+  struct test_object
   {
     int i;
 
     std::vector<int> v;
   };
 
-  void object_deserialize()
+  jeason<std::vector<test_object> >* j;
+
+public:
+
+  TEST_NAME()
+    :j(NULL)
   {
-    jeason<object>* element_parser = jeason<object>::build();
+    jeason<test_object>* element_parser = jeason<test_object>::build();
 
-    element_parser->add_member( "i", &object::i );
-    element_parser->add_member( "v", &object::v );
+    element_parser->add_member( "i", &test_object::i );
+    element_parser->add_member( "v", &test_object::v );
     
-    jeason<std::vector<object> >* j = jeason<std::vector<object> >::build(element_parser);
+    this->j = jeason<std::vector<test_object> >::build(element_parser);
+  }
 
-    std::vector<object> object_vector;
-    object_vector.push_back( object() );
+  ~TEST_NAME()
+  {
+    delete this->j;
+  }
 
-    object_vector.back().i = 0;
-    object_vector.back().v.push_back(0);
-    object_vector.back().v.push_back(0);
+  void deserialize_multiple()
+  {
 
-    object_vector.push_back( object() );
+    std::vector<test_object> test_object_vector;
+    test_object_vector.push_back( test_object() );
 
-    object_vector.back().i = 0;
-    object_vector.back().v.push_back(0);
-    object_vector.back().v.push_back(0);
+    test_object_vector.back().i = 0;
+    test_object_vector.back().v.push_back(0);
+    test_object_vector.back().v.push_back(0);
+
+    test_object_vector.push_back( test_object() );
+
+    test_object_vector.back().i = 0;
+    test_object_vector.back().v.push_back(0);
+    test_object_vector.back().v.push_back(0);
 
     std::stringstream buffer("[{ \"i\": 1, \"v\": [ 2, 3 ] }, "
 			     " { \"i\": 3, \"v\": [ 4, 5, 6 ] }, "
 			     " { \"i\": 7, \"v\": [ 8 ] }]");
 
-    j->deserialize(object_vector, buffer);
+    this->j->deserialize(test_object_vector, buffer);
 
-    CPPUNIT_ASSERT_EQUAL( size_t(3), object_vector.size() );
-
-
-    CPPUNIT_ASSERT_EQUAL( 1, object_vector.at(0).i );
-
-    CPPUNIT_ASSERT_EQUAL( size_t(2), object_vector.at(0).v.size() );
-    CPPUNIT_ASSERT_EQUAL( 2, object_vector.at(0).v.at(0) );
-    CPPUNIT_ASSERT_EQUAL( 3, object_vector.at(0).v.at(1) );
+    CPPUNIT_ASSERT_EQUAL( size_t(3), test_object_vector.size() );
 
 
-    CPPUNIT_ASSERT_EQUAL( 3, object_vector.at(1).i );
+    CPPUNIT_ASSERT_EQUAL( 1, test_object_vector.at(0).i );
 
-    CPPUNIT_ASSERT_EQUAL( size_t(3), object_vector.at(1).v.size() );
-    CPPUNIT_ASSERT_EQUAL( 4, object_vector.at(1).v.at(0) );
-    CPPUNIT_ASSERT_EQUAL( 5, object_vector.at(1).v.at(1) );
-    CPPUNIT_ASSERT_EQUAL( 6, object_vector.at(1).v.at(2) );
+    CPPUNIT_ASSERT_EQUAL( size_t(2), test_object_vector.at(0).v.size() );
+    CPPUNIT_ASSERT_EQUAL( 2, test_object_vector.at(0).v.at(0) );
+    CPPUNIT_ASSERT_EQUAL( 3, test_object_vector.at(0).v.at(1) );
 
 
-    CPPUNIT_ASSERT_EQUAL( 7, object_vector.at(2).i );
+    CPPUNIT_ASSERT_EQUAL( 3, test_object_vector.at(1).i );
 
-    CPPUNIT_ASSERT_EQUAL( size_t(1), object_vector.at(2).v.size() );
-    CPPUNIT_ASSERT_EQUAL( 8, object_vector.at(2).v.at(0) );
+    CPPUNIT_ASSERT_EQUAL( size_t(3), test_object_vector.at(1).v.size() );
+    CPPUNIT_ASSERT_EQUAL( 4, test_object_vector.at(1).v.at(0) );
+    CPPUNIT_ASSERT_EQUAL( 5, test_object_vector.at(1).v.at(1) );
+    CPPUNIT_ASSERT_EQUAL( 6, test_object_vector.at(1).v.at(2) );
 
-    delete j;
+
+    CPPUNIT_ASSERT_EQUAL( 7, test_object_vector.at(2).i );
+
+    CPPUNIT_ASSERT_EQUAL( size_t(1), test_object_vector.at(2).v.size() );
+    CPPUNIT_ASSERT_EQUAL( 8, test_object_vector.at(2).v.at(0) );
   }
 
-
-  void object_serialize()
+  void deserialize_single()
   {
-    jeason<object>* element_parser = jeason<object>::build();
+    std::vector<test_object> test_object_vector;
+    test_object_vector.push_back( test_object() );
 
-    element_parser->add_member( "i", &object::i );
-    element_parser->add_member( "v", &object::v );
-    
-    jeason<std::vector<object> >* j = jeason<std::vector<object> >::build(element_parser);
+    test_object_vector.back().i = 0;
+    test_object_vector.back().v.push_back(0);
+    test_object_vector.back().v.push_back(0);
 
-    std::vector<object> object_vector;
+    std::stringstream buffer("[{ \"i\": 1, \"v\": [ 2 ] }]");
 
-    object_vector.push_back( object() );
+    this->j->deserialize(test_object_vector, buffer);
 
-    object_vector.back().i = 1;
-    object_vector.back().v.push_back(2);
-    object_vector.back().v.push_back(3);
+    CPPUNIT_ASSERT_EQUAL( size_t(1), test_object_vector.size() );
 
-    object_vector.push_back( object() );
+    CPPUNIT_ASSERT_EQUAL( 1, test_object_vector.at(0).i );
 
-    object_vector.back().i = 4;
-    object_vector.back().v.push_back(5);
+    CPPUNIT_ASSERT_EQUAL( size_t(1), test_object_vector.at(0).v.size() );
+    CPPUNIT_ASSERT_EQUAL( 2, test_object_vector.at(0).v.at(0) );
+  }
+
+  void deserialize_empty()
+  {
+    std::vector<test_object> test_object_vector;
+    test_object_vector.push_back( test_object() );
+
+    test_object_vector.back().i = 0;
+    test_object_vector.back().v.push_back(0);
+    test_object_vector.back().v.push_back(0);
+
+    test_object_vector.push_back( test_object() );
+
+    test_object_vector.back().i = 0;
+    test_object_vector.back().v.push_back(0);
+    test_object_vector.back().v.push_back(0);
+
+    std::stringstream buffer("[]");
+
+    this->j->deserialize(test_object_vector, buffer);
+
+    CPPUNIT_ASSERT_EQUAL( size_t(0), test_object_vector.size() );
+
+  }
+
+  void serialize_multiple()
+  {
+    std::vector<test_object> test_object_vector;
+
+    test_object_vector.push_back( test_object() );
+
+    test_object_vector.back().i = 1;
+    test_object_vector.back().v.push_back(2);
+    test_object_vector.back().v.push_back(3);
+
+    test_object_vector.push_back( test_object() );
+
+    test_object_vector.back().i = 4;
+    test_object_vector.back().v.push_back(5);
     
     std::stringstream buffer;
 
-    j->serialize(object_vector, buffer);
+    this->j->serialize(test_object_vector, buffer);
 
     CPPUNIT_ASSERT_EQUAL( std::string("[{\"i\": 1, \"v\": [2, 3]}, {\"i\": 4, \"v\": [5]}]"), buffer.str() );
 
-    delete j;
   }
 
+  void serialize_single()
+  {
+    std::vector<test_object> test_object_vector;
+
+    test_object_vector.push_back( test_object() );
+
+    test_object_vector.back().i = 1;
+    test_object_vector.back().v.push_back(2);
+
+    std::stringstream buffer;
+
+    this->j->serialize(test_object_vector, buffer);
+
+    CPPUNIT_ASSERT_EQUAL( std::string("[{\"i\": 1, \"v\": [2]}]"), 
+			  buffer.str() );
+  }
+
+  void serialize_empty()
+  {
+    std::vector<test_object> test_object_vector;
+
+    std::stringstream buffer;
+
+    this->j->serialize(test_object_vector, buffer);
+
+    CPPUNIT_ASSERT_EQUAL( std::string("[]"), buffer.str() );
+  }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TEST_NAME );
