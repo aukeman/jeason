@@ -33,6 +33,7 @@ class TEST_NAME : public CppUnit::TestFixture
   CPPUNIT_TEST( single_str_array_whitespace_test );
   CPPUNIT_TEST( multiple_str_array_whitespace_test );
 
+  CPPUNIT_TEST( object_whitespace_test );
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -62,6 +63,7 @@ public:
      j_test_object(test_object_jeason::build())
   {
     j_test_object->add_member( "i", &test_object::i );
+    j_test_object->add_member( "f", &test_object::f );
     j_test_object->add_member( "s", &test_object::s );
   }
 
@@ -331,6 +333,58 @@ public:
     }
   }
 
+  void object_whitespace_test()
+  {
+    for ( size_t ws_idx_1 = 0;
+	  whitespace_strings[ws_idx_1] != NULL;
+	  ++ws_idx_1 )
+    {
+      for ( size_t ws_idx_2 = 0;
+	    whitespace_strings[ws_idx_2] != NULL;
+	    ++ws_idx_2 )
+      {
+	for ( size_t ws_idx_3 = 0;
+	      whitespace_strings[ws_idx_3] != NULL;
+	      ++ws_idx_3 )
+	{
+	  test_object o;
+	  o.i = 999;
+	  o.f = 999.9f;
+	  o.s = "999";
+	  
+	  std::stringstream buffer;
+	  buffer << whitespace_strings[ws_idx_1] << "{"
+		 << whitespace_strings[ws_idx_2] << "\"i\"" 
+		 << whitespace_strings[ws_idx_3] << ":" 
+		 << whitespace_strings[ws_idx_1] << "1"
+		 << whitespace_strings[ws_idx_2] << ","
+		 << whitespace_strings[ws_idx_3] << "\"f\""
+		 << whitespace_strings[ws_idx_1] << ":"
+		 << whitespace_strings[ws_idx_2] << "2.0"
+		 << whitespace_strings[ws_idx_3] << ","
+		 << whitespace_strings[ws_idx_1] << "\"s\""
+		 << whitespace_strings[ws_idx_2] << ":"
+		 << whitespace_strings[ws_idx_3] << "\"three\""
+		 << whitespace_strings[ws_idx_1] << "}"
+		 << whitespace_strings[ws_idx_2];
+ 
+	  j_test_object->deserialize( o, buffer );
+
+	  char msg[512];
+	  snprintf( msg, 
+		    512, 
+		    "ws_idx_1: %ul, ws_idx_2: %ul, ws_idx_3: %ul",
+		    ws_idx_1,
+		    ws_idx_2,
+		    ws_idx_3);
+
+	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, 1, o.i );
+	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, 2.0f, o.f );
+	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, std::string("three"), o.s );
+	}
+      }
+    }
+  }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TEST_NAME );
