@@ -364,7 +364,7 @@ public:
 		 << whitespace_strings[ws_idx_3] << ","
 		 << whitespace_strings[ws_idx_1] << "\"s\""
 		 << whitespace_strings[ws_idx_2] << ":"
-		 << whitespace_strings[ws_idx_3] << "\"three\""
+		 << whitespace_strings[ws_idx_3] << "\"three   four\""
 		 << whitespace_strings[ws_idx_1] << "}"
 		 << whitespace_strings[ws_idx_2];
  
@@ -380,7 +380,7 @@ public:
 
 	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, 1, o.i );
 	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, 2.0f, o.f );
-	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, std::string("three"), o.s );
+	  CPPUNIT_ASSERT_EQUAL_MESSAGE( msg, std::string("three   four"), o.s );
 	}
       }
     }
